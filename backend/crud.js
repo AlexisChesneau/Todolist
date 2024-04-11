@@ -7,9 +7,14 @@ const createItem = (name, callback) => {
   });
 };
 
-const readItem = (callback) => {
+const readAllItems = (callback) => {
   const sql = `SELECT * FROM items`;
   db.all(sql, [], callback);
+};
+
+const readItem = (id, callback) => {
+  const sql = `SELECT name FROM items WHERE id = ?`;
+  db.get(sql, id, callback);
 };
 
 const updateItem = (id, name, callback) => {
@@ -22,4 +27,4 @@ const deleteItem = (id, callback) => {
   db.run(sql, id, callback);
 };
 
-module.exports = { createItem, readItem, updateItem, deleteItem };
+module.exports = { createItem, readAllItems, updateItem, deleteItem, readItem };

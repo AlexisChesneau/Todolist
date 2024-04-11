@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Item from "./component/Item";
 import "./App.css";
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
   }
 
   async function addId(event) {
-    event.preventDefault();
+    // event.preventDefault();
     await axios
       .post(API, { name: newId })
       .then(() => {
@@ -41,7 +42,7 @@ function App() {
   return (
     <>
       <div>
-        <form onSubmit={addId} action="submit">
+        <form onSubmit={addId}>
           <label>
             New Todo
             <input
@@ -52,15 +53,7 @@ function App() {
           </label>
         </form>
         {items.map((item, idx) => (
-          <div key={idx} style={{ display: "flex" }}>
-            <p style={{ display: "flex", alignItems: "center" }}>{item.name}</p>
-            <button
-              onClick={() => deleteId(item.id)}
-              style={{ margin: "16px" }}
-            >
-              x
-            </button>
-          </div>
+          <Item deleteId={deleteId} key={idx} name={item.name} id={item.id} />
         ))}
       </div>
     </>

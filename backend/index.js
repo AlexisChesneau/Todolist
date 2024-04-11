@@ -1,13 +1,19 @@
 const express = require("express");
 const cors = require("cors");
-const { createItem, readItem, updateItem, deleteItem } = require("./crud");
+const {
+  createItem,
+  readAllItems,
+  updateItem,
+  deleteItem,
+  readItem,
+} = require("./crud");
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
 app.get("/items", (req, res) => {
-  readItem((err, rows) => {
+  readAllItems((err, rows) => {
     if (err) {
       res.status(500).send(err.message);
     } else {
@@ -16,7 +22,19 @@ app.get("/items", (req, res) => {
   });
 });
 
+app.get("/items/:identifiant", (request, response) => {
+  console.log(request.params);
+  readItem(request.params.identifiant, (err, rows) => {
+    if (err) {
+      response.status(500).send(err.message);
+    } else {
+      response.status(200).json(rows);
+    }
+  });
+});
+
 app.post("/items", (req, res) => {
+  console.log(req.body);
   const { name } = req.body;
   createItem(name, (err, _) => {
     if (err) {
