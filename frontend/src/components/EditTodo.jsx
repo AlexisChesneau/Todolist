@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_ITEMS } from "../api";
 
 function EditTodo() {
-  const API = "http://localhost:3000/items";
   let { id } = useParams();
   const [newName, setNewName] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     async function getData() {
-      const result = await axios.get(`${API}/${id}`);
-      console.log(result.data.name);
+      const result = await axios.get(`${API_ITEMS}/${id}`);
       setNewName(result.data.name);
     }
     getData();
@@ -20,7 +19,7 @@ function EditTodo() {
   async function updateId(event) {
     event.preventDefault();
     await axios
-      .put(`${API}/${id}`, { name: newName })
+      .put(`${API_ITEMS}/${id}`, { name: newName })
       .then(() => {
         console.log("id update");
         navigate("/");

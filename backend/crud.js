@@ -19,7 +19,13 @@ const readItem = (id, callback) => {
 
 const updateItem = (id, name, callback) => {
   const sql = `UPDATE items SET name = ? WHERE id = ?`;
+  console.log(sql);
   db.run(sql, [name, id], callback);
+};
+
+const updateCheckbox = (id, checkbox, callback) => {
+  const sql = `UPDATE items SET checkbox = ? WHERE id = ?`;
+  db.run(sql, [checkbox, id], callback);
 };
 
 const deleteItem = (id, callback) => {
@@ -27,4 +33,11 @@ const deleteItem = (id, callback) => {
   db.run(sql, id, callback);
 };
 
-module.exports = { createItem, readAllItems, updateItem, deleteItem, readItem };
+module.exports = {
+  createItem,
+  readAllItems,
+  updateItem,
+  deleteItem,
+  readItem,
+  updateCheckbox,
+};

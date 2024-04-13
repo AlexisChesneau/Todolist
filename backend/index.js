@@ -6,6 +6,7 @@ const {
   updateItem,
   deleteItem,
   readItem,
+  updateCheckbox,
 } = require("./crud");
 const app = express();
 
@@ -45,8 +46,24 @@ app.post("/items", (req, res) => {
   });
 });
 
+app.put("/checkbox/:id", (req, res) => {
+  const { checkbox } = req.body;
+  console.log(
+    "Update checkbox /checkbox/:id " + checkbox + " " + req.params.id
+  );
+
+  updateCheckbox(req.params.id, checkbox, (err) => {
+    if (err) {
+      res.status(500).send(err.message);
+    } else {
+      res.status(200).json(`Updated item`);
+    }
+  });
+});
+
 app.put("/items/:id", (req, res) => {
   const { name } = req.body;
+  console.log("Update item /items/:id " + name + " " + req.params.id);
   updateItem(req.params.id, name, (err) => {
     if (err) {
       res.status(500).send(err.message);

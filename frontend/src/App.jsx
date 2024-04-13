@@ -1,17 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Item from "./component/Item";
+import Item from "./components/Item";
 import "./App.css";
+import { API_ITEMS } from "./api";
 
 function App() {
   let [items, setItems] = useState([]);
   let [newId, setNewId] = useState("");
 
-  const API = "http://localhost:3000/items";
-
   useEffect(() => {
     async function getData() {
-      const result = await axios.get(API);
+      const result = await axios.get(API_ITEMS);
       setItems(result.data);
     }
     getData();
@@ -19,7 +18,7 @@ function App() {
 
   async function deleteId(id) {
     await axios
-      .delete(`${API}/${id}`)
+      .delete(`${API_ITEMS}/${id}`)
       .then(() => {
         console.log("id deleted");
         setItems((old) => [...old].filter((item) => item.id !== id));
@@ -53,7 +52,13 @@ function App() {
           </label>
         </form>
         {items.map((item, idx) => (
-          <Item deleteId={deleteId} key={idx} name={item.name} id={item.id} />
+          <Item
+            deleteId={deleteId}
+            key={idx}
+            name={item.name}
+            id={item.id}
+            checkbox={item.checkbox}
+          />
         ))}
       </div>
     </>

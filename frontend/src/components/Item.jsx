@@ -1,11 +1,24 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { API_CHECKBOX } from "../api";
 
-function Item({ name, id, deleteId }) {
-  //   const API = "http://localhost:3000/items";
+function Item({ name, id, deleteId, checkbox }) {
+  const checkboxBoolean = checkbox === 0 ? false : true;
+  const [isChecked, setIsChecked] = useState(checkboxBoolean);
 
-  //   const [newName, setNewName] = useState(name);
+  console.log(typeof isChecked);
+  console.log(isChecked);
+
+  async function updateCheckbox() {
+    await axios
+      .put(`${API_CHECKBOX}/${id}`, { checkbox: !isChecked })
+      .then(() => {
+        setIsChecked(!isChecked);
+        console.log("checkbox update");
+      })
+      .catch((err) => console.log(err));
+  }
 
   //   async function updateId(event) {
   //     event.preventDefault();
@@ -18,6 +31,8 @@ function Item({ name, id, deleteId }) {
   //       .catch((err) => console.log(err));
   //   }
 
+  // console.log(checkbox);
+
   return (
     <div style={{ display: "flex" }}>
       <p style={{ display: "flex", alignItems: "center" }}>{name}</p>
@@ -27,7 +42,7 @@ function Item({ name, id, deleteId }) {
       <button onClick={() => deleteId(id)} style={{ margin: "16px" }}>
         x
       </button>
-      <input type="checkbox" />
+      <input type="checkbox" onChange={updateCheckbox} checked={isChecked} />
       {/* <input value={newName} type="text" onChange={(e) => updateId(e)} /> */}
     </div>
   );
