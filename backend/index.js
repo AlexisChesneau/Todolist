@@ -1,5 +1,8 @@
+const middlewaresDebug = require("./middlewares/middlewares");
 const express = require("express");
 const cors = require("cors");
+const app = express();
+
 const {
   createItem,
   readAllItems,
@@ -8,10 +11,10 @@ const {
   readItem,
   updateCheckbox,
 } = require("./crud");
-const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(middlewaresDebug);
 
 app.get("/items", (req, res) => {
   readAllItems((err, rows) => {
@@ -24,7 +27,6 @@ app.get("/items", (req, res) => {
 });
 
 app.get("/items/:identifiant", (request, response) => {
-  console.log(request.params);
   readItem(request.params.identifiant, (err, rows) => {
     if (err) {
       response.status(500).send(err.message);
@@ -35,7 +37,6 @@ app.get("/items/:identifiant", (request, response) => {
 });
 
 app.post("/items", (req, res) => {
-  console.log(req.body);
   const { name } = req.body;
   createItem(name, (err, _) => {
     if (err) {
@@ -48,10 +49,6 @@ app.post("/items", (req, res) => {
 
 app.put("/checkbox/:id", (req, res) => {
   const { checkbox } = req.body;
-  console.log(
-    "Update checkbox /checkbox/:id " + checkbox + " " + req.params.id
-  );
-
   updateCheckbox(req.params.id, checkbox, (err) => {
     if (err) {
       res.status(500).send(err.message);
@@ -63,7 +60,6 @@ app.put("/checkbox/:id", (req, res) => {
 
 app.put("/items/:id", (req, res) => {
   const { name } = req.body;
-  console.log("Update item /items/:id " + name + " " + req.params.id);
   updateItem(req.params.id, name, (err) => {
     if (err) {
       res.status(500).send(err.message);

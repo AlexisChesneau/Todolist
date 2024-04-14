@@ -19,12 +19,4 @@ let db = new sqlite3.Database(dbname, (err) => {
   }
 });
 
-// db.close((err) => {
-//   if (err) {
-//     console.error(err.message);
-//   } else {
-//     console.log("Database closed.");
-//   }
-// });
-
 module.exports = db;

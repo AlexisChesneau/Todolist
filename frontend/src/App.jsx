@@ -27,7 +27,6 @@ function App() {
   }
 
   async function addId(event) {
-    // event.preventDefault();
     await axios
       .post(API, { name: newId })
       .then(() => {
