@@ -1,4 +1,4 @@
-const middlewaresDebug = require("./middlewares/middlewares");
+const middlewaresDebug = require("./middlewares/middlewaresDebug");
 const express = require("express");
 const cors = require("cors");
 const app = express();
