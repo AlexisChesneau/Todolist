@@ -1,5 +1,5 @@
 function middlewaresDebug(req, res, next) {
-  console.log("\n______________________________________________________");
+  console.log("\n_______________________________________");
   console.log(
     `${new Date().toLocaleString("fr")} - ${req.method} ${req.url}  `
   );
